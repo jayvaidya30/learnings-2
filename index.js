@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt");
 const express = require("express");
 const { UserModel, TodoModel } = require("./db");
 const app = express();
@@ -13,11 +14,16 @@ app.post("/signup", async function (req, res) {
     const password = req.body.password;
     const name = req.body.password;
 
+
+    const hashedPassword = await bcrypt.hash(password, 5);
+    console.log(hashedPassword)
+
     await UserModel.create({
         email: email,
-        password: password,
+        password: hashedPassword,
         name: name
     })
+
 
     res.json({
         message: "You are logged in"
@@ -31,16 +37,23 @@ app.post("/signin", async function (req, res) {
     const email = req.body.email;
     const password = req.body.password;
 
-    const user = await UserModel.findOne({
-        email: email,
-        password: password
+    const response = await UserModel.findOne({
+        email: email
     })
 
-    console.log(user)
+    if(!response){
+        res.status(403).json({
+            message: "User does not exist in DB"
+        })
+        return
+    }
 
-    if (user) {
+    const passwordMatch = await bcrypt.compare(password, response.password);
+
+
+    if (passwordMatch) {
         const token = jwt.sign({
-            id: user._id.toString()
+            id: response._id.toString()
         }, JWT_SECRET);
         res.json({
             token: token
@@ -51,17 +64,14 @@ app.post("/signin", async function (req, res) {
         })
     }
 
-
-
-
 });
 
-app.post("/todo", auth, function (req, res) {
+app.post("/todoo", auth, async function (req, res) {
     const userId = req.userId;
 
     const title = req.body.title;
 
-    TodoModel.create({
+    await TodoModel.create({
         title,
         userId
     })
@@ -73,7 +83,7 @@ app.post("/todo", auth, function (req, res) {
 });
 
 
-app.post("/todos", auth, function (req, res) {
+app.post("/todos", auth, async function (req, res) {
     const userId = req.userId;
     const todos = await TodoModel.find({
         userId: userId
