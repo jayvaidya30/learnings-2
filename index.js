@@ -14,20 +14,28 @@ app.post("/signup", async function (req, res) {
     const password = req.body.password;
     const name = req.body.password;
 
+    let errorThrown = false;
+    try {
+        const hashedPassword = await bcrypt.hash(password, 5);
+        console.log(hashedPassword)
 
-    const hashedPassword = await bcrypt.hash(password, 5);
-    console.log(hashedPassword)
+        await UserModel.create({
+            email: email,
+            password: hashedPassword,
+            name: name
+        })
+    } catch (e) {
+        res.json({
+            message: "user already exist"
+        })
+        errorThrown = true;
+    }
 
-    await UserModel.create({
-        email: email,
-        password: hashedPassword,
-        name: name
-    })
-
-
-    res.json({
-        message: "You are logged in"
-    })
+    if (!errorThrown) {
+        res.json({
+            message: "You are logged in"
+        })
+    }
 
 
 });
@@ -41,7 +49,7 @@ app.post("/signin", async function (req, res) {
         email: email
     })
 
-    if(!response){
+    if (!response) {
         res.status(403).json({
             message: "User does not exist in DB"
         })
