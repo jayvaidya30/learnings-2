@@ -5,11 +5,33 @@ const app = express();
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "Secret";
 const mongoose = require("mongoose");
+const { z, parse } = require("zod");
+
 app.use(express.json());
+
 
 mongoose.connect("mongodb+srv://jayvaidya30:mivuqizBVpvXxegM@cluster0.86xlhas.mongodb.net/todo-jay-222");
 
 app.post("/signup", async function (req, res) {
+
+    const requiredBody = z.object({
+        email: z.string().min(3).max(100).z.email(),
+        name: z.string().min(3).max(100),
+        password: z.string().min(3).max(100)
+    })
+
+    // const parsedData = requiredBody.parse(req.body);
+    const parsedDatawWithSuccess = requiredBody.safeParse(req.body);
+
+    if(!parsedDatawWithSuccess){
+        res.json({
+            message: "Incorrect Format",
+            error: parsedDatawWithSuccess.error
+        })
+        return
+    }
+
+
     const email = req.body.email;
     const password = req.body.password;
     const name = req.body.password;
