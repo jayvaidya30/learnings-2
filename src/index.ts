@@ -1,14 +1,12 @@
-function sum(a: number, b: number) {
-  return a + b;
+interface User {
+  name: string,
+  age: number
 }
 
-let ans = sum(1, 2);
-console.log(ans);
-
-function delayedCall(fn: () => void) {
-  setTimeout(fn, 100);
+interface Manager {
+  name: string,
+  age: number
+  address: string 
 }
 
-delayedCall(function () {
-  console.log("Hello");
-});
+type UserAndManager = User | Manager;
