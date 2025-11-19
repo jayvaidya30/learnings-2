@@ -1,12 +1,17 @@
-interface User {
+interface People {
   name: string,
-  age: number
+  age: number,
+  greet: () => string, 
 }
 
-interface Manager {
-  name: string,
-  age: number
-  address: string 
+let person: People = {
+  name: "harkirat",
+  age: 21,
+  greet: () => {
+    return "hi"
+  },
 }
 
-type UserAndManager = User | Manager;
+
+let greeting = person.greet();
+console.log(greeting);
