@@ -13,3 +13,6 @@ class Manager implements People {
     this.age = age;
   }
 }
+
+let user = new Manager("John", 30);
+console.log(user.name);
