@@ -1,18 +1,31 @@
-interface People {
-  name: string;
+// Array in TS
+
+interface User {
+  firstName: string;
+  lastName: string;
   age: number;
-  //greet: () => string;
 }
 
-class Manager implements People {
-  name: string;
-  age: number;
+function isLegal(users: User[]) {
+  return users.filter(user => user.age > 18);
+}
 
-  constructor(name: string, age: number) {
-    this.name = name;
-    this.age = age;
+const filterUser = isLegal([
+  {
+    firstName: "jay",
+    lastName: "vaidya",
+    age: 19,
+  },
+  {
+    firstName: "sam",
+    lastName: "vaidya",
+    age: 20,
+  },
+  {
+    firstName: "Hari",
+    lastName: "vaidya",
+    age: 17,
   }
-}
+]);
 
-let user = new Manager("John", 30);
-console.log(user.name);
+console.log(filterUser);
