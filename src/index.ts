@@ -1,16 +1,25 @@
-//readonly
+//records and maps
 
-type User = {
-  name: string;
+//Record make syntax more clearer
+
+type Users = Record<string, { age: number; name: string }>;
+
+const users = {
+  jay: { age: 19, name: "jay" },
+  test: { age: 100, name: "test" },
+};
+
+//Maps
+type AdminType = {
   age: number;
-  readonly email: string
-};
+  name: string;
+}
 
-const user: User = { // Readonly<User> i.e makes whole object readonly
-  name: "jay",        
-  age: 21,
-  email: "jay@gmail.com"
-};
+const admins = new Map<string, AdminType>(); // enforcing a type to Map
 
-user.age = 13; // here it is allowing me to change the value of internal
-user.email = "test@gmail.com"; // here Typescript shows an error cause the email key is readonly and cannot be changed
+admins.set("jay", { age: 19, name: "jay" });
+
+const admin = admins.get("jay");
+admins.delete("jay")
+
+//maps is also one of the way to store key value pairs
