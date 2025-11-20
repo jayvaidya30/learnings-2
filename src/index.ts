@@ -1,31 +1,13 @@
-// Array in TS
-
 interface User {
-  firstName: string;
-  lastName: string;
+  id: number;
+  name: string;
   age: number;
+  email: string;
+  password: string;
 }
 
-function isLegal(users: User[]) {
-  return users.filter(user => user.age > 18);
+type UpdateProps = Pick<User, "name" | "age" | "password">;
+
+function displayProfile(props: UpdateProps) {
+  console.log(`Name: ${props.name} and Age: ${props.age}`);
 }
-
-const filterUser = isLegal([
-  {
-    firstName: "jay",
-    lastName: "vaidya",
-    age: 19,
-  },
-  {
-    firstName: "sam",
-    lastName: "vaidya",
-    age: 20,
-  },
-  {
-    firstName: "Hari",
-    lastName: "vaidya",
-    age: 17,
-  }
-]);
-
-console.log(filterUser);
