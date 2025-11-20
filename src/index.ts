@@ -1,20 +1,16 @@
-interface User {
-  id: number;
+//readonly
+
+type User = {
   name: string;
   age: number;
-  email: string;
-  password: string;
-}
+  readonly email: string
+};
 
-type UpdateProps = Pick<User, "name" | "email" | "password">; // pick lets you pick certain values/keys from interface which reduce redandancy(duplication)
+const user: User = { // Readonly<User> i.e makes whole object readonly
+  name: "jay",        
+  age: 21,
+  email: "jay@gmail.com"
+};
 
-type UpdatePropsOptional = Partial<UpdateProps>; // paritial(key?) is a utility which lets you make a key optional or here every key in UpdateProps is optional
-
-function updateUser(props: UpdatePropsOptional) {
-  //database call to update the user
-}
-
-updateUser({
-  email: "jayvaidya30@gmail.com", // here I can use one key of User interface because the other keys are set to partial i.e means I can user only one key if i want to
-});
-
+user.age = 13; // here it is allowing me to change the value of internal
+user.email = "test@gmail.com"; // here Typescript shows an error cause the email key is readonly and cannot be changed
