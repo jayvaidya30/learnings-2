@@ -4,18 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc -b && node ./dist/ws.js"
+    "dev": "tsc -b && node ./dist/ws.js",
+    "rs": "tsc -b && node ./dist/ws.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
+    "@types/ws": "^8.18.1",
     "bcrypt": "^6.0.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.1",
     "typescript": "^5.9.3",
+    "ws": "^8.18.3",
     "zod": "^4.1.12"
   }
 }
