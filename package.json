@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc -b && node ./dist/ws.js"
+    "dev": "tsc -b && node ./dist/db.js"
   },
   "keywords": [],
   "author": "",
