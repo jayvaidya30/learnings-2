@@ -15,8 +15,9 @@ const pgClient = new Client(
 
 async function main() {
   await pgClient.connect();
+  const insertQuery = ""
   const response = await pgClient.query("SELECT * FROM users;");
-  console.log(response);
+  console.log(response.rows);
 }
 
 main();
